@@ -1,7 +1,113 @@
 #include "encryption.h"
-
-
-Encryption::Encryption(QObject *parent) :
-    QObject(parent)
+#include <QProcess>
+#include <QApplication>
+#include <qDebug>
+#include <QStringList>
+#include <QFileInfo>
+Encryption::Encryption(QObject *parent):QObject(parent),encryprocess(NULL),decryprocess(NULL)
 {
+}
+
+void Encryption::encryption(QString path, QString passwd,QString outPath)
+{
+	QString z("./7z/7z.exe");
+	//QString z("D:/MyPro/QT_Encryption/7z/7z.exe");
+	QStringList argList;
+	argList.append("a");
+	argList.append("-t7z");
+	argList.append(Encryption::GetDirectoryName(path));//Ñ¹Ëõ°üÃû³Æ
+	path.replace('\\',"/");
+	if(path.at(path.length()-1)=='/')
+	{
+		argList.append(path+"");
+
+	}
+	else
+	{
+		argList.append(path+"/*");
+	}
+	if(""==outPath)
+	{
+		argList.append("-o"+Encryption::GetUpDirectory(path));
+	}
+	else
+	{
+		outPath.replace('\\','/');
+		argList.append("-o"+outPath);
+	}
+	argList.append("-p"+passwd);
+	argList.append("-mhe=on");
+	//argList.append("-mmt=on");
+
+	//qDebug()
+	QProcess *p=new QProcess(this);
+    this->encryprocess=p;
+	p->setProcessChannelMode(QProcess::MergedChannels);
+	connect(p,SIGNAL(readyReadStandardOutput()),this,SLOT(Output()));
+//    foreach(QString i, argList)
+//    {
+//        qDebug()<<i;
+//    }
+	p->start(z,argList);
+
+	//p->waitForFinished();
+    //qDebug()<<p->nativeArguments();
+}
+
+QString Encryption::GetDirectoryName(QString path)
+{
+
+	QDir dir(path);
+	qDebug()<<dir.current().dirName();
+	return dir.current().dirName();
+
+}
+
+QString Encryption::GetUpDirectory(QString path)
+{
+	QDir dir(path);
+	dir.cdUp();
+	return dir.currentPath();
+}
+
+void Encryption::Output() const
+{
+    if(NULL!=this->encryprocess)
+    {
+    qDebug()<<this->encryprocess->readAllStandardOutput();
+    }
+    if(NULL!=this->decryprocess)
+    {
+    qDebug()<<this->decryprocess->readAllStandardOutput();
+    }
+}
+
+void Encryption::decryption(QString file,QString passwd,QString outPath)
+{
+	QString z("./7z/7z.exe");
+	//QString z("D:/MyPro/QT_Encryption/7z/7z.exe");
+	QStringList argList;
+	argList.append("x");
+    argList.append(file);
+    argList.append("-p"+passwd);
+
+    outPath.replace('\\','/');
+    if(""==outPath)
+    {
+        QFileInfo fileinfo(file);
+        //QDir dir(fileinfo.path());
+        argList.append("-o"+fileinfo.path());
+
+    }
+    else
+    {
+        //if(outPath.at(outPath.length()-1)=="/")
+        argList.append("-o"+outPath);
+    }
+    QProcess *p=new QProcess(this);
+    this->decryprocess=p;
+    p->setProcessChannelMode(QProcess::MergedChannels);
+    connect(p,SIGNAL(readyReadStandardOutput()),this,SLOT(Output()));
+    p->start(z,argList);
+
 }

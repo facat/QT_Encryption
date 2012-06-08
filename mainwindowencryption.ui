@@ -14,17 +14,17 @@
    <string>MainWindowEncryption</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="listWidgetDirList">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>10</x>
       <y>70</y>
-      <width>751</width>
+      <width>351</width>
       <height>391</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButtonAdd">
+   <widget class="QPushButton" name="pushButtonRemove">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -34,23 +34,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Remove</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonFresh">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>530</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonRemove">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -60,8 +47,42 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Fresh</string>
     </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonAdd">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>530</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Add</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidgetDetail">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>70</y>
+      <width>441</width>
+      <height>391</height>
+     </rect>
+    </property>
+    <property name="sortingEnabled">
+     <bool>true</bool>
+    </property>
+    <property name="cornerButtonEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="columnCount">
+     <number>2</number>
+    </property>
+    <column/>
+    <column/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

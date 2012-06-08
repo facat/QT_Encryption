@@ -3,73 +3,127 @@
 #include <QApplication>
 #include <qDebug>
 #include <QStringList>
-Encryption::Encryption(QObject *parent):QObject(parent)
+#include <QFileInfo>
+
+Encryption::Encryption(QObject *parent):QObject(parent),encryprocess(NULL),decryprocess(NULL)
 {
 }
 
 void Encryption::encryption(QString path, QString passwd,QString outPath)
 {
-    QString z("./7z/7z.exe");
-    //QString z("D:/MyPro/QT_Encryption/7z/7z.exe");
-    QStringList argList;
-    argList.append("a");
-    argList.append("-t7z");
-    argList.append(Encryption::GetDirectoryName(path));//压缩包名称
-    path.replace('\\',"/");
-    if(path.at(path.length()-1)=='/')
-    {
-        argList.append(path+"");
+	QString z("./7z/7z.exe");
+	//QString z("D:/MyPro/QT_Encryption/7z/7z.exe");
+	QStringList argList;
+	argList.append("a");
+	argList.append("-t7z");
 
-    }
-    else
-    {
-         argList.append(path+"/*");
-    }
     if(""==outPath)
     {
-    argList.append("-o"+Encryption::GetUpDirectory(path));
+        //qDebug()<<"GetUpDirectory"<<Encryption::GetUpDirectory(path);
+        QString out7zFile=Encryption::GetUpDirectory(path)+"/"+Encryption::GetDirectoryName(path)+".7z";
+        qDebug()<<out7zFile;
+        argList.append(out7zFile);
+        //qDebug()<<Encryption::GetUpDirectory(path)+"/"+Encryption::GetDirectoryName(path)+".7z";
+        //qDebug()<<"base dir"<<QApplication::applicationDirPath();
+        //qDebug()<<"output:"<<path;
+
+        //如果文件已经存在则删除
+        QString removedFile(out7zFile);
+        qDebug()<<removedFile;
+        QFile::remove(removedFile);
+
     }
     else
     {
         outPath.replace('\\','/');
-        argList.append("-o"+outPath);
+        QString out7zFile=outPath+"/"+Encryption::GetDirectoryName(path)+".7z";
+        qDebug()<<"out7zFile"<<out7zFile;
+        argList.append(out7zFile);
+        //如果文件已经存在则删除
+        QString removedFile(out7zFile);
+        qDebug()<<removedFile;
+        QFile::remove(removedFile);
     }
-    argList.append("-p"+passwd);
-    argList.append("-mhe=on");
-    //argList.append("-mmt=on");
+	path.replace('\\',"/");
+	if(path.at(path.length()-1)=='/')
+	{
+        argList.append(path);
 
-    //qDebug()
-    QProcess *p=new QProcess(this);
-    this->process=p;
-    p->setProcessChannelMode(QProcess::MergedChannels);
-    connect(p,SIGNAL(readyReadStandardOutput()),this,SLOT(Output()));
-//    foreach(QString i, argList)
-//    {
-//        qDebug()<<i;
-//    }
-    p->start(z,argList);
+	}
+	else
+	{
+        argList.append(path+"/");
+	}
 
-    //p->waitForFinished();
+	argList.append("-p"+passwd);
+	argList.append("-mhe=on");
+
+
+	QProcess *p=new QProcess(this);
+	this->encryprocess=p;
+	p->setProcessChannelMode(QProcess::MergedChannels);
+	connect(p,SIGNAL(readyReadStandardOutput()),this,SLOT(Output()));
+	p->start(z,argList);
     qDebug()<<p->nativeArguments();
 }
 
 QString Encryption::GetDirectoryName(QString path)
 {
 
-    QDir dir(path);
-    qDebug()<<dir.current().dirName();
-    return dir.current().dirName();
+	QDir dir(path);
+	qDebug()<<dir.current().dirName();
+	return dir.current().dirName();
 
 }
 
 QString Encryption::GetUpDirectory(QString path)
 {
-    QDir dir(path);
+	QDir dir(path);
+    qDebug()<<"in function GetUpDirectory"<<path;
+
     dir.cdUp();
-    return dir.currentPath();
+    qDebug()<<"in function GetUpDirectory"<<dir.path();
+    return dir.path();
 }
 
 void Encryption::Output() const
 {
-    qDebug()<<this->process->readAllStandardOutput();
+	if(NULL!=this->encryprocess)
+	{
+		qDebug()<<this->encryprocess->readAllStandardOutput();
+	}
+	if(NULL!=this->decryprocess)
+	{
+		qDebug()<<this->decryprocess->readAllStandardOutput();
+	}
+}
+
+void Encryption::decryption(QString file,QString passwd,QString outPath)
+{
+	QString z("./7z/7z.exe");
+	//QString z("D:/MyPro/QT_Encryption/7z/7z.exe");
+	QStringList argList;
+	argList.append("x");
+	argList.append(file);
+	argList.append("-p"+passwd);
+
+	outPath.replace('\\','/');
+	if(""==outPath)
+	{
+        QFileInfo fileinfo(file);
+		//QDir dir(fileinfo.path());
+        argList.append("-o"+fileinfo.path());
+
+	}
+	else
+	{
+		//if(outPath.at(outPath.length()-1)=="/")
+		argList.append("-o"+outPath);
+	}
+	QProcess *p=new QProcess(this);
+	this->decryprocess=p;
+	p->setProcessChannelMode(QProcess::MergedChannels);
+	connect(p,SIGNAL(readyReadStandardOutput()),this,SLOT(Output()));
+	p->start(z,argList);
+
 }

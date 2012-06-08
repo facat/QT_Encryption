@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindowencryption.ui'
 **
-** Created: Wed May 23 18:27:00 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Fri Jun 8 21:33:30 2012
+**      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -20,6 +20,7 @@
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
 #include <QtGui/QStatusBar>
+#include <QtGui/QTableWidget>
 #include <QtGui/QToolBar>
 #include <QtGui/QWidget>
 
@@ -29,10 +30,11 @@ class Ui_MainWindowEncryption
 {
 public:
     QWidget *centralWidget;
-    QListWidget *listWidget;
-    QPushButton *pushButtonAdd;
-    QPushButton *pushButtonFresh;
+    QListWidget *listWidgetDirList;
     QPushButton *pushButtonRemove;
+    QPushButton *pushButtonFresh;
+    QPushButton *pushButtonAdd;
+    QTableWidget *tableWidgetDetail;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -44,18 +46,26 @@ public:
         MainWindowEncryption->resize(863, 721);
         centralWidget = new QWidget(MainWindowEncryption);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        listWidget = new QListWidget(centralWidget);
-        listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setGeometry(QRect(40, 70, 751, 391));
-        pushButtonAdd = new QPushButton(centralWidget);
-        pushButtonAdd->setObjectName(QString::fromUtf8("pushButtonAdd"));
-        pushButtonAdd->setGeometry(QRect(330, 530, 75, 23));
-        pushButtonFresh = new QPushButton(centralWidget);
-        pushButtonFresh->setObjectName(QString::fromUtf8("pushButtonFresh"));
-        pushButtonFresh->setGeometry(QRect(160, 530, 75, 23));
+        listWidgetDirList = new QListWidget(centralWidget);
+        listWidgetDirList->setObjectName(QString::fromUtf8("listWidgetDirList"));
+        listWidgetDirList->setGeometry(QRect(10, 70, 351, 391));
         pushButtonRemove = new QPushButton(centralWidget);
         pushButtonRemove->setObjectName(QString::fromUtf8("pushButtonRemove"));
-        pushButtonRemove->setGeometry(QRect(480, 530, 75, 23));
+        pushButtonRemove->setGeometry(QRect(330, 530, 75, 23));
+        pushButtonFresh = new QPushButton(centralWidget);
+        pushButtonFresh->setObjectName(QString::fromUtf8("pushButtonFresh"));
+        pushButtonFresh->setGeometry(QRect(480, 530, 75, 23));
+        pushButtonAdd = new QPushButton(centralWidget);
+        pushButtonAdd->setObjectName(QString::fromUtf8("pushButtonAdd"));
+        pushButtonAdd->setGeometry(QRect(130, 530, 75, 23));
+        tableWidgetDetail = new QTableWidget(centralWidget);
+        if (tableWidgetDetail->columnCount() < 2)
+            tableWidgetDetail->setColumnCount(2);
+        tableWidgetDetail->setObjectName(QString::fromUtf8("tableWidgetDetail"));
+        tableWidgetDetail->setGeometry(QRect(380, 70, 441, 391));
+        tableWidgetDetail->setSortingEnabled(true);
+        tableWidgetDetail->setCornerButtonEnabled(false);
+        tableWidgetDetail->setColumnCount(2);
         MainWindowEncryption->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindowEncryption);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -76,9 +86,9 @@ public:
     void retranslateUi(QMainWindow *MainWindowEncryption)
     {
         MainWindowEncryption->setWindowTitle(QApplication::translate("MainWindowEncryption", "MainWindowEncryption", 0, QApplication::UnicodeUTF8));
-        pushButtonAdd->setText(QApplication::translate("MainWindowEncryption", "PushButton", 0, QApplication::UnicodeUTF8));
-        pushButtonFresh->setText(QApplication::translate("MainWindowEncryption", "PushButton", 0, QApplication::UnicodeUTF8));
-        pushButtonRemove->setText(QApplication::translate("MainWindowEncryption", "PushButton", 0, QApplication::UnicodeUTF8));
+        pushButtonRemove->setText(QApplication::translate("MainWindowEncryption", "Remove", 0, QApplication::UnicodeUTF8));
+        pushButtonFresh->setText(QApplication::translate("MainWindowEncryption", "Fresh", 0, QApplication::UnicodeUTF8));
+        pushButtonAdd->setText(QApplication::translate("MainWindowEncryption", "Add", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

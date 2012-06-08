@@ -1,0 +1,26 @@
+#include "mainwindowencryption.h"
+#include "src/encryption.h"
+MainWindowEncryption::MainWindowEncryption(QWidget *parent) :
+	QMainWindow(parent)
+{
+
+	setupUi(this);
+	Encryption *ency=new Encryption(this);
+    ency->encryption("D:/MyPro/QT_Encryption/7z/1","123");
+    //connect(this->pushButtonAdd,SIGNAL(clicked()),this,SLOT(on_pushButtonAdd_clicked()));
+}
+
+
+
+void MainWindowEncryption::on_pushButtonAdd_clicked()
+{
+    QFileDialog dialog;
+
+        dialog.getExistingDirectory(this,"Ñ¡ÔñÎÄ¼þ¼Ð");
+
+}
+
+void MainWindowEncryption::on_pushButtonRemove_clicked()
+{
+    qDebug()<<"sdf";
+}
