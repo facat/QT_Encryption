@@ -84,6 +84,19 @@
     <column/>
     <column/>
    </widget>
+   <widget class="QPushButton" name="pushButtonCheckOut">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>530</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>CheckOut</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

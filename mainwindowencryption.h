@@ -18,18 +18,22 @@ public:
     explicit MainWindowEncryption(QWidget *parent = 0);
 private:
     void AddNewDir(QDir dir);
-    void RemoveDir();
+    void RemoveDir(QDir dir);
     QString HashDirName(QString data);
     bool IsDirExist(QString dir);
     void MakeBackup(QString dir);
     void ReadAllBackups();
     void WriteAllBackups();
+    void closeEvent(QCloseEvent *);
+    void RefreshBackups(QString dir);
 private slots:
     void on_pushButtonAdd_clicked();
     void on_pushButtonRemove_clicked();
     void on_listWidgetDirList_itemClicked(QListWidgetItem *item);
 
-    void on_MainWindowEncryption_destroyed();
+
+
+    void on_pushButtonCheckOut_clicked();
 
 private:
     QDir backupLocation;

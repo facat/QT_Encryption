@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindowencryption.ui'
 **
-** Created: Fri Jun 8 21:33:30 2012
+** Created: Sat Jun 9 20:39:27 2012
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -35,6 +35,7 @@ public:
     QPushButton *pushButtonFresh;
     QPushButton *pushButtonAdd;
     QTableWidget *tableWidgetDetail;
+    QPushButton *pushButtonCheckOut;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -66,6 +67,9 @@ public:
         tableWidgetDetail->setSortingEnabled(true);
         tableWidgetDetail->setCornerButtonEnabled(false);
         tableWidgetDetail->setColumnCount(2);
+        pushButtonCheckOut = new QPushButton(centralWidget);
+        pushButtonCheckOut->setObjectName(QString::fromUtf8("pushButtonCheckOut"));
+        pushButtonCheckOut->setGeometry(QRect(230, 530, 75, 23));
         MainWindowEncryption->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindowEncryption);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -89,6 +93,7 @@ public:
         pushButtonRemove->setText(QApplication::translate("MainWindowEncryption", "Remove", 0, QApplication::UnicodeUTF8));
         pushButtonFresh->setText(QApplication::translate("MainWindowEncryption", "Fresh", 0, QApplication::UnicodeUTF8));
         pushButtonAdd->setText(QApplication::translate("MainWindowEncryption", "Add", 0, QApplication::UnicodeUTF8));
+        pushButtonCheckOut->setText(QApplication::translate("MainWindowEncryption", "CheckOut", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
