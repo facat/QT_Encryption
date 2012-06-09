@@ -151,9 +151,9 @@ void MainWindowEncryption::closeEvent(QCloseEvent *e)
 
 void MainWindowEncryption::on_pushButtonCheckOut_clicked()
 {
-    Encryption ency(this);
+    Encryption *ency=new Encryption(this);
     if(NULL==this->listWidgetDirList->currentItem()) return;
-    ency.encryption(this->listWidgetDirList->currentItem()->text(),"123",this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/')));
+    ency->encryption(this->listWidgetDirList->currentItem()->text(),"123",this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/')));
     this->RefreshBackups(this->listWidgetDirList->currentItem()->text());
 }
 void MainWindowEncryption::RefreshBackups(QString dir)

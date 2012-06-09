@@ -71,8 +71,8 @@ QString Encryption::GetDirectoryName(QString path)
 {
 
 	QDir dir(path);
-	qDebug()<<dir.current().dirName();
-	return dir.current().dirName();
+    qDebug()<<dir.dirName();
+    return dir.dirName();
 
 }
 
