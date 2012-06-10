@@ -26,6 +26,7 @@ private:
     void WriteAllBackups();
     void closeEvent(QCloseEvent *);
     void RefreshBackups(QString dir);
+    QString GetValidZipName(QString dir);
 private slots:
     void on_pushButtonAdd_clicked();
     void on_pushButtonRemove_clicked();

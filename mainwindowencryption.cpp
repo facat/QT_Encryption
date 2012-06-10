@@ -40,12 +40,8 @@ void MainWindowEncryption::on_pushButtonRemove_clicked()
 	this->RemoveDir(this->listWidgetDirList->currentItem()->text());
 	qDebug()<<this->listWidgetDirList->currentItem()->text();
 	delete this->listWidgetDirList->takeItem(this->listWidgetDirList->currentRow());
-    this->tableWidgetDetail->clear();
-
-
-
-
-
+    this->tableWidgetDetail->clearContents();
+    this->tableWidgetDetail->setRowCount(0);
 }
 
 void MainWindowEncryption::AddNewDir(QDir dir)
@@ -77,6 +73,7 @@ void MainWindowEncryption::RemoveDir(QDir dir)
 	{
 		QMessageBox::critical(this,"×¢Òâ","Ä¿Â¼É¾³ýÊ§°Ü£¡");
 	}
+
 }
 
 QString MainWindowEncryption::HashDirName(QString data)
@@ -153,7 +150,11 @@ void MainWindowEncryption::on_pushButtonCheckOut_clicked()
 {
     Encryption *ency=new Encryption(this);
     if(NULL==this->listWidgetDirList->currentItem()) return;
-    ency->encryption(this->listWidgetDirList->currentItem()->text(),"123",this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/')));
+    ency->encryption(this->listWidgetDirList->currentItem()->text(),
+                     "123",
+                     this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/')),
+                     this->GetValidZipName(this->listWidgetDirList->currentItem()->text())
+                     );
     this->RefreshBackups(this->listWidgetDirList->currentItem()->text());
 }
 void MainWindowEncryption::RefreshBackups(QString dir)
@@ -174,4 +175,18 @@ void MainWindowEncryption::RefreshBackups(QString dir)
         ind++;
     }
     //this->tableWidgetDetail->show();
+}
+
+QString MainWindowEncryption::GetValidZipName(QString dir)
+{
+    dir.replace('\\','/');
+    QDir objDir(this->backupLocation.path()+"/"+this->HashDirName(dir));
+    int i=0;
+    QString zipName=this->HashDirName(dir)+QString::number(i)+".7z";
+    while(QFile::exists(objDir.path()+"/"+zipName))
+    {
+        i++;
+        zipName=this->HashDirName(dir)+QString::number(i)+".7z";
+    }
+    return this->HashDirName(dir)+QString::number(i);
 }

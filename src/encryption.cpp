@@ -9,7 +9,7 @@ Encryption::Encryption(QObject *parent):QObject(parent),encryprocess(NULL),decry
 {
 }
 
-void Encryption::encryption(QString path, QString passwd,QString outPath)
+void Encryption::encryption(QString path, QString passwd, QString outPath, QString zipName)
 {
 	QString z("./7z/7z.exe");
 	//QString z("D:/MyPro/QT_Encryption/7z/7z.exe");
@@ -17,42 +17,60 @@ void Encryption::encryption(QString path, QString passwd,QString outPath)
 	argList.append("a");
 	argList.append("-t7z");
 
-    if(""==outPath)
-    {
-        //qDebug()<<"GetUpDirectory"<<Encryption::GetUpDirectory(path);
-        QString out7zFile=Encryption::GetUpDirectory(path)+"/"+Encryption::GetDirectoryName(path)+".7z";
-        qDebug()<<out7zFile;
-        argList.append(out7zFile);
-        //qDebug()<<Encryption::GetUpDirectory(path)+"/"+Encryption::GetDirectoryName(path)+".7z";
-        //qDebug()<<"base dir"<<QApplication::applicationDirPath();
-        //qDebug()<<"output:"<<path;
-
-        //如果文件已经存在则删除
-        QString removedFile(out7zFile);
-        qDebug()<<removedFile;
-        QFile::remove(removedFile);
-
-    }
-    else
-    {
-        outPath.replace('\\','/');
-        QString out7zFile=outPath+"/"+Encryption::GetDirectoryName(path)+".7z";
-        qDebug()<<"out7zFile"<<out7zFile;
-        argList.append(out7zFile);
-        //如果文件已经存在则删除
-        QString removedFile(out7zFile);
-        qDebug()<<removedFile;
-        QFile::remove(removedFile);
-    }
-	path.replace('\\',"/");
-	if(path.at(path.length()-1)=='/')
+	if(""==outPath)
 	{
-        argList.append(path);
+		//qDebug()<<"GetUpDirectory"<<Encryption::GetUpDirectory(path);
+        QString out7zFile;
+        if(""==zipName)
+        {
+
+            out7zFile=Encryption::GetUpDirectory(path)+"/"+Encryption::GetDirectoryName(path)+".7z";
+        }
+        else
+        {
+            out7zFile=Encryption::GetUpDirectory(path)+"/"+zipName+".7z";
+        }
+		qDebug()<<out7zFile;
+		argList.append(out7zFile);
+		//qDebug()<<Encryption::GetUpDirectory(path)+"/"+Encryption::GetDirectoryName(path)+".7z";
+		//qDebug()<<"base dir"<<QApplication::applicationDirPath();
+		//qDebug()<<"output:"<<path;
+
+		//如果文件已经存在则删除
+		QString removedFile(out7zFile);
+		qDebug()<<removedFile;
+		QFile::remove(removedFile);
 
 	}
 	else
 	{
-        argList.append(path+"/");
+		outPath.replace('\\','/');
+		QString out7zFile;
+		if(""==zipName)
+		{
+            out7zFile=outPath+"/"+Encryption::GetDirectoryName(path)+".7z";
+
+		}
+		else
+		{
+            out7zFile=outPath+"/"+zipName+".7z";
+		}
+		qDebug()<<"out7zFile"<<out7zFile;
+		argList.append(out7zFile);
+		//如果文件已经存在则删除
+		QString removedFile(out7zFile);
+		qDebug()<<removedFile;
+		QFile::remove(removedFile);
+	}
+	path.replace('\\',"/");
+	if(path.at(path.length()-1)=='/')
+	{
+		argList.append(path);
+
+	}
+	else
+	{
+		argList.append(path+"/");
 	}
 
 	argList.append("-p"+passwd);
@@ -64,26 +82,26 @@ void Encryption::encryption(QString path, QString passwd,QString outPath)
 	p->setProcessChannelMode(QProcess::MergedChannels);
 	connect(p,SIGNAL(readyReadStandardOutput()),this,SLOT(Output()));
 	p->start(z,argList);
-    qDebug()<<p->nativeArguments();
+	qDebug()<<p->nativeArguments();
 }
 
 QString Encryption::GetDirectoryName(QString path)
 {
 
 	QDir dir(path);
-    qDebug()<<dir.dirName();
-    return dir.dirName();
+	qDebug()<<dir.dirName();
+	return dir.dirName();
 
 }
 
 QString Encryption::GetUpDirectory(QString path)
 {
 	QDir dir(path);
-    qDebug()<<"in function GetUpDirectory"<<path;
+	qDebug()<<"in function GetUpDirectory"<<path;
 
-    dir.cdUp();
-    qDebug()<<"in function GetUpDirectory"<<dir.path();
-    return dir.path();
+	dir.cdUp();
+	qDebug()<<"in function GetUpDirectory"<<dir.path();
+	return dir.path();
 }
 
 void Encryption::Output() const
@@ -96,6 +114,7 @@ void Encryption::Output() const
 	{
 		qDebug()<<this->decryprocess->readAllStandardOutput();
 	}
+
 }
 
 void Encryption::decryption(QString file,QString passwd,QString outPath)
@@ -110,9 +129,9 @@ void Encryption::decryption(QString file,QString passwd,QString outPath)
 	outPath.replace('\\','/');
 	if(""==outPath)
 	{
-        QFileInfo fileinfo(file);
+		QFileInfo fileinfo(file);
 		//QDir dir(fileinfo.path());
-        argList.append("-o"+fileinfo.path());
+		argList.append("-o"+fileinfo.path());
 
 	}
 	else

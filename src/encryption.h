@@ -11,7 +11,7 @@ class Encryption:public QObject
 public:
 	explicit Encryption(QObject *parent);
 	void decryption(QString file, QString passwd, QString outPath="");
-	void encryption(QString path, QString passwd, QString outPath="");
+    void encryption(QString path, QString passwd, QString outPath="",QString zipName="");
 private:
 	QString GetDirectoryName(QString path);
 	QString GetUpDirectory(QString path);
