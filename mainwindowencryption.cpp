@@ -1,5 +1,7 @@
 #include "mainwindowencryption.h"
 #include "src/encryption.h"
+#include "src/filedescription.h"
+#include "src/detaildialog.h"
 MainWindowEncryption::MainWindowEncryption(QWidget *parent) :
 	QMainWindow(parent),
 	backupLocation("c:/backuplocation/")
@@ -8,6 +10,8 @@ MainWindowEncryption::MainWindowEncryption(QWidget *parent) :
 	setupUi(this);
 	this->tableWidgetDetail->horizontalHeader()->setStretchLastSection(true);
 	this->ReadAllBackups();
+    //FileDescription des("C:/backuplocation/db.s3db");
+    //des.SetFileDetail("fsd111","f","sdf");
 
 }
 
@@ -40,8 +44,8 @@ void MainWindowEncryption::on_pushButtonRemove_clicked()
 	this->RemoveDir(this->listWidgetDirList->currentItem()->text());
 	qDebug()<<this->listWidgetDirList->currentItem()->text();
 	delete this->listWidgetDirList->takeItem(this->listWidgetDirList->currentRow());
-    this->tableWidgetDetail->clearContents();
-    this->tableWidgetDetail->setRowCount(0);
+	this->tableWidgetDetail->clearContents();
+	this->tableWidgetDetail->setRowCount(0);
 }
 
 void MainWindowEncryption::AddNewDir(QDir dir)
@@ -95,7 +99,7 @@ bool MainWindowEncryption::IsDirExist(QString dir)
 void MainWindowEncryption::on_listWidgetDirList_itemClicked(QListWidgetItem *item)
 {
 	qDebug()<<"on_listWidgetDirList_itemClicked";
-    this->RefreshBackups(item->text());
+	this->RefreshBackups(item->text());
 
 }
 
@@ -148,45 +152,112 @@ void MainWindowEncryption::closeEvent(QCloseEvent *e)
 
 void MainWindowEncryption::on_pushButtonCheckOut_clicked()
 {
-    Encryption *ency=new Encryption(this);
-    if(NULL==this->listWidgetDirList->currentItem()) return;
-    ency->encryption(this->listWidgetDirList->currentItem()->text(),
-                     "123",
-                     this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/')),
-                     this->GetValidZipName(this->listWidgetDirList->currentItem()->text())
-                     );
-    this->RefreshBackups(this->listWidgetDirList->currentItem()->text());
+	Encryption *ency=new Encryption(this);
+	if(NULL==this->listWidgetDirList->currentItem()) return;
+    QString zipFile=ency->encryption(this->listWidgetDirList->currentItem()->text(),
+	                 "123",
+	                 this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/')),
+	                 this->GetValidZipName(this->listWidgetDirList->currentItem()->text())
+	                );
+    FileDescription fileDiscrip(this->backupLocation.path()+"/db.s3db");
+    QString realName(this->ExtractRealNameFromZipFile(zipFile));
+    qDebug()<<"realName "<<realName;
+    QString dirName(this->GetDirectoryName(this->listWidgetDirList->currentItem()->text()));
+    QString detail;
+    DetailDialog detailDialog(&detail,this);
+    detailDialog.setModal(true);
+    detailDialog.show();
+    detailDialog.exec();
+    fileDiscrip.SetFileDetail(realName,this->GetDirectoryName(dirName),detail);
+	this->RefreshBackups(this->listWidgetDirList->currentItem()->text());
 }
 void MainWindowEncryption::RefreshBackups(QString dir)
 {
-    QDir QDdir(this->backupLocation.path()+"/"+this->HashDirName(dir.replace('\\','/')));
-    qDebug()<<QDdir.path();
-    QFileInfoList info(QDdir.entryInfoList(QDir::Files));
-    int ind=0;
-    this->tableWidgetDetail->clear();
-    this->tableWidgetDetail->setRowCount(info.count());
-    foreach(QFileInfo i,info)
-    {
+	QDir QDdir(this->backupLocation.path()+"/"+this->HashDirName(dir.replace('\\','/')));
+	qDebug()<<QDdir.path();
+	QFileInfoList info(QDdir.entryInfoList(QDir::Files));
+	int ind=0;
+	this->tableWidgetDetail->clear();
+	this->tableWidgetDetail->setRowCount(info.count());
+	foreach(QFileInfo i,info)
+	{
 
-        qDebug()<<i.fileName();
-        this->tableWidgetDetail->setItem(ind,0,new QTableWidgetItem(i.fileName()));
-        this->tableWidgetDetail->setItem(ind,1,new QTableWidgetItem(i.lastModified().toString()));
+        qDebug()<<i.baseName();
+        QString realName(this->ExtractRealNameFromZipFile(i.baseName()));
+        FileDescription fileDes(this->backupLocation.path()+"/"+"db.s3db");
+        QString fileName=fileDes.GetFileName(realName);
+        this->tableWidgetDetail->setItem(ind,0,new QTableWidgetItem(fileName));
+		this->tableWidgetDetail->setItem(ind,1,new QTableWidgetItem(i.lastModified().toString()));
+        QString detail(fileDes.GetFileDetail(realName));
+        this->tableWidgetDetail->setItem(ind,2,new QTableWidgetItem(detail));
 
-        ind++;
-    }
-    //this->tableWidgetDetail->show();
+		ind++;
+	}
+	//this->tableWidgetDetail->show();
 }
 
 QString MainWindowEncryption::GetValidZipName(QString dir)
 {
-    dir.replace('\\','/');
-    QDir objDir(this->backupLocation.path()+"/"+this->HashDirName(dir));
-    int i=0;
-    QString zipName=this->HashDirName(dir)+QString::number(i)+".7z";
-    while(QFile::exists(objDir.path()+"/"+zipName))
+	dir.replace('\\','/');
+	QDir objDir(this->backupLocation.path()+"/"+this->HashDirName(dir));
+	int i=0;
+	QString zipName=this->HashDirName(dir)+QString::number(i)+".7z";
+	while(QFile::exists(objDir.path()+"/"+zipName))
+	{
+		i++;
+		zipName=this->HashDirName(dir)+QString::number(i)+".7z";
+	}
+	return this->HashDirName(dir)+QString::number(i);
+}
+
+void MainWindowEncryption::on_pushButtonCheckIn_clicked()
+{
+    if(-1==this->tableWidgetDetail->currentRow())
     {
-        i++;
-        zipName=this->HashDirName(dir)+QString::number(i)+".7z";
+        QMessageBox::information(this,"提示","为选择文件包！");
+        return;
     }
-    return this->HashDirName(dir)+QString::number(i);
+	QString zipName;
+	zipName=this->tableWidgetDetail->item(this->tableWidgetDetail->currentRow(),0)->text();
+
+	//des=this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/'));
+	QString des;
+	if( QMessageBox::question(this,"注意","是否恢复？",QMessageBox::Yes|QMessageBox::No)==QMessageBox::No) return;
+	QDir desDir(this->listWidgetDirList->currentItem()->text());
+	QStringList fileList(desDir.entryList());
+	foreach(QString i,fileList)
+	{
+		desDir.remove(i);
+	}
+	desDir.cdUp();
+    if(desDir.isRoot())
+    {
+        des=desDir.path();
+        des.remove(des.length()-1,1);
+
+    }
+    else
+    {
+	des=desDir.path();
+    }
+    qDebug()<<des;
+	Encryption *ency=new Encryption(this);
+	QString fromFile;
+	fromFile=this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/'))+"/"+zipName;
+	qDebug()<<fromFile;
+	ency->decryption(fromFile,"123",des);
+
+
+}
+
+QString MainWindowEncryption::ExtractRealNameFromZipFile(const QString &zipFile)
+{
+    QFileInfo info(zipFile);
+    return info.baseName();
+
+}
+QString MainWindowEncryption::GetDirectoryName(QString path)
+{
+    QDir dir(path);
+    return dir.dirName();
 }

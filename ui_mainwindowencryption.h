@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindowencryption.ui'
 **
-** Created: Sat Jun 9 20:39:27 2012
+** Created: Sun Jun 10 22:20:54 2012
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,6 +14,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QListWidget>
 #include <QtGui/QMainWindow>
@@ -30,12 +31,15 @@ class Ui_MainWindowEncryption
 {
 public:
     QWidget *centralWidget;
+    QTableWidget *tableWidgetDetail;
     QListWidget *listWidgetDirList;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *horizontalLayout;
+    QPushButton *pushButtonAdd;
+    QPushButton *pushButtonCheckOut;
+    QPushButton *pushButtonCheckIn;
     QPushButton *pushButtonRemove;
     QPushButton *pushButtonFresh;
-    QPushButton *pushButtonAdd;
-    QTableWidget *tableWidgetDetail;
-    QPushButton *pushButtonCheckOut;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -47,29 +51,50 @@ public:
         MainWindowEncryption->resize(863, 721);
         centralWidget = new QWidget(MainWindowEncryption);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        listWidgetDirList = new QListWidget(centralWidget);
-        listWidgetDirList->setObjectName(QString::fromUtf8("listWidgetDirList"));
-        listWidgetDirList->setGeometry(QRect(10, 70, 351, 391));
-        pushButtonRemove = new QPushButton(centralWidget);
-        pushButtonRemove->setObjectName(QString::fromUtf8("pushButtonRemove"));
-        pushButtonRemove->setGeometry(QRect(330, 530, 75, 23));
-        pushButtonFresh = new QPushButton(centralWidget);
-        pushButtonFresh->setObjectName(QString::fromUtf8("pushButtonFresh"));
-        pushButtonFresh->setGeometry(QRect(480, 530, 75, 23));
-        pushButtonAdd = new QPushButton(centralWidget);
-        pushButtonAdd->setObjectName(QString::fromUtf8("pushButtonAdd"));
-        pushButtonAdd->setGeometry(QRect(130, 530, 75, 23));
         tableWidgetDetail = new QTableWidget(centralWidget);
-        if (tableWidgetDetail->columnCount() < 2)
-            tableWidgetDetail->setColumnCount(2);
+        if (tableWidgetDetail->columnCount() < 3)
+            tableWidgetDetail->setColumnCount(3);
         tableWidgetDetail->setObjectName(QString::fromUtf8("tableWidgetDetail"));
-        tableWidgetDetail->setGeometry(QRect(380, 70, 441, 391));
+        tableWidgetDetail->setGeometry(QRect(290, 10, 531, 481));
         tableWidgetDetail->setSortingEnabled(true);
         tableWidgetDetail->setCornerButtonEnabled(false);
-        tableWidgetDetail->setColumnCount(2);
-        pushButtonCheckOut = new QPushButton(centralWidget);
+        tableWidgetDetail->setColumnCount(3);
+        listWidgetDirList = new QListWidget(centralWidget);
+        listWidgetDirList->setObjectName(QString::fromUtf8("listWidgetDirList"));
+        listWidgetDirList->setGeometry(QRect(20, 10, 241, 479));
+        horizontalLayoutWidget = new QWidget(centralWidget);
+        horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
+        horizontalLayoutWidget->setGeometry(QRect(110, 540, 641, 80));
+        horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        pushButtonAdd = new QPushButton(horizontalLayoutWidget);
+        pushButtonAdd->setObjectName(QString::fromUtf8("pushButtonAdd"));
+
+        horizontalLayout->addWidget(pushButtonAdd);
+
+        pushButtonCheckOut = new QPushButton(horizontalLayoutWidget);
         pushButtonCheckOut->setObjectName(QString::fromUtf8("pushButtonCheckOut"));
-        pushButtonCheckOut->setGeometry(QRect(230, 530, 75, 23));
+
+        horizontalLayout->addWidget(pushButtonCheckOut);
+
+        pushButtonCheckIn = new QPushButton(horizontalLayoutWidget);
+        pushButtonCheckIn->setObjectName(QString::fromUtf8("pushButtonCheckIn"));
+
+        horizontalLayout->addWidget(pushButtonCheckIn);
+
+        pushButtonRemove = new QPushButton(horizontalLayoutWidget);
+        pushButtonRemove->setObjectName(QString::fromUtf8("pushButtonRemove"));
+
+        horizontalLayout->addWidget(pushButtonRemove);
+
+        pushButtonFresh = new QPushButton(horizontalLayoutWidget);
+        pushButtonFresh->setObjectName(QString::fromUtf8("pushButtonFresh"));
+
+        horizontalLayout->addWidget(pushButtonFresh);
+
         MainWindowEncryption->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindowEncryption);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -90,10 +115,11 @@ public:
     void retranslateUi(QMainWindow *MainWindowEncryption)
     {
         MainWindowEncryption->setWindowTitle(QApplication::translate("MainWindowEncryption", "MainWindowEncryption", 0, QApplication::UnicodeUTF8));
-        pushButtonRemove->setText(QApplication::translate("MainWindowEncryption", "Remove", 0, QApplication::UnicodeUTF8));
-        pushButtonFresh->setText(QApplication::translate("MainWindowEncryption", "Fresh", 0, QApplication::UnicodeUTF8));
         pushButtonAdd->setText(QApplication::translate("MainWindowEncryption", "Add", 0, QApplication::UnicodeUTF8));
         pushButtonCheckOut->setText(QApplication::translate("MainWindowEncryption", "CheckOut", 0, QApplication::UnicodeUTF8));
+        pushButtonCheckIn->setText(QApplication::translate("MainWindowEncryption", "CheckIn", 0, QApplication::UnicodeUTF8));
+        pushButtonRemove->setText(QApplication::translate("MainWindowEncryption", "Remove", 0, QApplication::UnicodeUTF8));
+        pushButtonFresh->setText(QApplication::translate("MainWindowEncryption", "Fresh", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

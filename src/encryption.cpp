@@ -9,27 +9,27 @@ Encryption::Encryption(QObject *parent):QObject(parent),encryprocess(NULL),decry
 {
 }
 
-void Encryption::encryption(QString path, QString passwd, QString outPath, QString zipName)
+QString Encryption::encryption(QString path, QString passwd, QString outPath, QString zipName)
 {
 	QString z("./7z/7z.exe");
 	//QString z("D:/MyPro/QT_Encryption/7z/7z.exe");
 	QStringList argList;
 	argList.append("a");
 	argList.append("-t7z");
-
+	QString out7zFile;
 	if(""==outPath)
 	{
 		//qDebug()<<"GetUpDirectory"<<Encryption::GetUpDirectory(path);
-        QString out7zFile;
-        if(""==zipName)
-        {
 
-            out7zFile=Encryption::GetUpDirectory(path)+"/"+Encryption::GetDirectoryName(path)+".7z";
-        }
-        else
-        {
-            out7zFile=Encryption::GetUpDirectory(path)+"/"+zipName+".7z";
-        }
+		if(""==zipName)
+		{
+
+			out7zFile=Encryption::GetUpDirectory(path)+"/"+Encryption::GetDirectoryName(path)+".7z";
+		}
+		else
+		{
+			out7zFile=Encryption::GetUpDirectory(path)+"/"+zipName+".7z";
+		}
 		qDebug()<<out7zFile;
 		argList.append(out7zFile);
 		//qDebug()<<Encryption::GetUpDirectory(path)+"/"+Encryption::GetDirectoryName(path)+".7z";
@@ -45,15 +45,15 @@ void Encryption::encryption(QString path, QString passwd, QString outPath, QStri
 	else
 	{
 		outPath.replace('\\','/');
-		QString out7zFile;
+
 		if(""==zipName)
 		{
-            out7zFile=outPath+"/"+Encryption::GetDirectoryName(path)+".7z";
+			out7zFile=outPath+"/"+Encryption::GetDirectoryName(path)+".7z";
 
 		}
 		else
 		{
-            out7zFile=outPath+"/"+zipName+".7z";
+			out7zFile=outPath+"/"+zipName+".7z";
 		}
 		qDebug()<<"out7zFile"<<out7zFile;
 		argList.append(out7zFile);
@@ -82,7 +82,9 @@ void Encryption::encryption(QString path, QString passwd, QString outPath, QStri
 	p->setProcessChannelMode(QProcess::MergedChannels);
 	connect(p,SIGNAL(readyReadStandardOutput()),this,SLOT(Output()));
 	p->start(z,argList);
-	qDebug()<<p->nativeArguments();
+	//qDebug()<<p->nativeArguments();
+	return out7zFile;
+
 }
 
 QString Encryption::GetDirectoryName(QString path)
@@ -114,7 +116,7 @@ void Encryption::Output() const
 	{
 		qDebug()<<this->decryprocess->readAllStandardOutput();
 	}
-    const_cast<Encryption *>(this)->deleteLater();
+	const_cast<Encryption *>(this)->deleteLater();
 
 }
 

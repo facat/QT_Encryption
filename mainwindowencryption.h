@@ -27,6 +27,8 @@ private:
     void closeEvent(QCloseEvent *);
     void RefreshBackups(QString dir);
     QString GetValidZipName(QString dir);
+    QString ExtractRealNameFromZipFile(const QString &zipFile);
+    QString GetDirectoryName(QString path);
 private slots:
     void on_pushButtonAdd_clicked();
     void on_pushButtonRemove_clicked();
@@ -35,6 +37,8 @@ private slots:
 
 
     void on_pushButtonCheckOut_clicked();
+
+    void on_pushButtonCheckIn_clicked();
 
 private:
     QDir backupLocation;

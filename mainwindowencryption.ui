@@ -14,62 +14,13 @@
    <string>MainWindowEncryption</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QListWidget" name="listWidgetDirList">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>70</y>
-      <width>351</width>
-      <height>391</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonRemove">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>530</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Remove</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonFresh">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>530</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Fresh</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonAdd">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>530</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Add</string>
-    </property>
-   </widget>
    <widget class="QTableWidget" name="tableWidgetDetail">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>70</y>
-      <width>441</width>
-      <height>391</height>
+      <x>290</x>
+      <y>10</y>
+      <width>531</width>
+      <height>481</height>
      </rect>
     </property>
     <property name="sortingEnabled">
@@ -79,23 +30,68 @@
      <bool>false</bool>
     </property>
     <property name="columnCount">
-     <number>2</number>
+     <number>3</number>
     </property>
+    <column/>
     <column/>
     <column/>
    </widget>
-   <widget class="QPushButton" name="pushButtonCheckOut">
+   <widget class="QListWidget" name="listWidgetDirList">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>530</y>
-      <width>75</width>
-      <height>23</height>
+      <x>20</x>
+      <y>10</y>
+      <width>241</width>
+      <height>479</height>
      </rect>
     </property>
-    <property name="text">
-     <string>CheckOut</string>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>540</y>
+      <width>641</width>
+      <height>80</height>
+     </rect>
     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButtonAdd">
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonCheckOut">
+       <property name="text">
+        <string>CheckOut</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonCheckIn">
+       <property name="text">
+        <string>CheckIn</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonRemove">
+       <property name="text">
+        <string>Remove</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonFresh">
+       <property name="text">
+        <string>Fresh</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
