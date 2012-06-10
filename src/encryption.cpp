@@ -114,6 +114,7 @@ void Encryption::Output() const
 	{
 		qDebug()<<this->decryprocess->readAllStandardOutput();
 	}
+    const_cast<Encryption *>(this)->deleteLater();
 
 }
 
