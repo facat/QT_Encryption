@@ -33,20 +33,7 @@ void MainWindowEncryption::on_pushButtonAdd_clicked()
 
 }
 
-void MainWindowEncryption::on_pushButtonRemove_clicked()
-{
-	if(this->listWidgetDirList->currentItem()==NULL)
-	{
-		QMessageBox::information(this,"提示","未选择");
-		return;
-	}
-	if(QMessageBox::question(this,"提示","将删除备份，是否继续？",QMessageBox::Yes|QMessageBox::No)==QMessageBox::No) return;
-	this->RemoveDir(this->listWidgetDirList->currentItem()->text());
-	qDebug()<<this->listWidgetDirList->currentItem()->text();
-	delete this->listWidgetDirList->takeItem(this->listWidgetDirList->currentRow());
-	this->tableWidgetDetail->clearContents();
-	this->tableWidgetDetail->setRowCount(0);
-}
+
 
 void MainWindowEncryption::AddNewDir(QDir dir)
 {
@@ -186,11 +173,18 @@ void MainWindowEncryption::RefreshBackups(QString dir)
         QString realName(this->ExtractRealNameFromZipFile(i.baseName()));
         FileDescription fileDes(this->backupLocation.path()+"/"+"db.s3db");
         QString fileName=fileDes.GetFileName(realName);
-        this->tableWidgetDetail->setItem(ind,0,new QTableWidgetItem(fileName));
-		this->tableWidgetDetail->setItem(ind,1,new QTableWidgetItem(i.lastModified().toString()));
+        this->tableWidgetDetail->setItem(ind,0,new QTableWidgetItem(realName));
+        this->tableWidgetDetail->setItem(ind,1,new QTableWidgetItem(fileName));
+        this->tableWidgetDetail->setItem(ind,2,new QTableWidgetItem(i.lastModified().toString()));
         QString detail(fileDes.GetFileDetail(realName));
-        this->tableWidgetDetail->setItem(ind,2,new QTableWidgetItem(detail));
-
+        this->tableWidgetDetail->setItem(ind,3,new QTableWidgetItem(detail));
+        this->tableWidgetDetail->hideColumn(0);
+        QStringList headLabel;
+        headLabel.append("");
+        headLabel.append("1");
+        headLabel.append("2");
+        headLabel.append("3");
+        this->tableWidgetDetail->setHorizontalHeaderLabels(headLabel);
 		ind++;
 	}
 	//this->tableWidgetDetail->show();
@@ -260,4 +254,33 @@ QString MainWindowEncryption::GetDirectoryName(QString path)
 {
     QDir dir(path);
     return dir.dirName();
+}
+
+void MainWindowEncryption::on_pushButtonRemoveDir_clicked()
+{
+    if(this->listWidgetDirList->currentItem()==NULL)
+    {
+        QMessageBox::information(this,"提示","未选择");
+        return;
+    }
+    if(QMessageBox::question(this,"提示","将删除备份，是否继续？",QMessageBox::Yes|QMessageBox::No)==QMessageBox::No) return;
+    this->RemoveDir(this->listWidgetDirList->currentItem()->text());
+    qDebug()<<this->listWidgetDirList->currentItem()->text();
+    delete this->listWidgetDirList->takeItem(this->listWidgetDirList->currentRow());
+    this->tableWidgetDetail->clearContents();
+    this->tableWidgetDetail->setRowCount(0);
+}
+
+void MainWindowEncryption::on_pushButton_clicked()
+{
+    QList<QTableWidgetItem *>  selItem(this->tableWidgetDetail->selectedItems());
+    //QTableWidgetItem.row();
+}
+
+
+
+void MainWindowEncryption::on_tableWidgetDetail_itemClicked(QTableWidgetItem *item)
+{
+    qDebug()<<"on_tableWidgetDetail_itemClicked";
+    this->tableWidgetDetail->selectRow(item->row());
 }

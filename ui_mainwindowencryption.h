@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindowencryption.ui'
 **
-** Created: Sun Jun 10 22:20:54 2012
+** Created: Wed Jun 13 16:02:05 2012
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,7 +38,8 @@ public:
     QPushButton *pushButtonAdd;
     QPushButton *pushButtonCheckOut;
     QPushButton *pushButtonCheckIn;
-    QPushButton *pushButtonRemove;
+    QPushButton *pushButton;
+    QPushButton *pushButtonRemoveDir;
     QPushButton *pushButtonFresh;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
@@ -52,13 +53,13 @@ public:
         centralWidget = new QWidget(MainWindowEncryption);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         tableWidgetDetail = new QTableWidget(centralWidget);
-        if (tableWidgetDetail->columnCount() < 3)
-            tableWidgetDetail->setColumnCount(3);
+        if (tableWidgetDetail->columnCount() < 4)
+            tableWidgetDetail->setColumnCount(4);
         tableWidgetDetail->setObjectName(QString::fromUtf8("tableWidgetDetail"));
         tableWidgetDetail->setGeometry(QRect(290, 10, 531, 481));
         tableWidgetDetail->setSortingEnabled(true);
         tableWidgetDetail->setCornerButtonEnabled(false);
-        tableWidgetDetail->setColumnCount(3);
+        tableWidgetDetail->setColumnCount(4);
         listWidgetDirList = new QListWidget(centralWidget);
         listWidgetDirList->setObjectName(QString::fromUtf8("listWidgetDirList"));
         listWidgetDirList->setGeometry(QRect(20, 10, 241, 479));
@@ -85,10 +86,15 @@ public:
 
         horizontalLayout->addWidget(pushButtonCheckIn);
 
-        pushButtonRemove = new QPushButton(horizontalLayoutWidget);
-        pushButtonRemove->setObjectName(QString::fromUtf8("pushButtonRemove"));
+        pushButton = new QPushButton(horizontalLayoutWidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
 
-        horizontalLayout->addWidget(pushButtonRemove);
+        horizontalLayout->addWidget(pushButton);
+
+        pushButtonRemoveDir = new QPushButton(horizontalLayoutWidget);
+        pushButtonRemoveDir->setObjectName(QString::fromUtf8("pushButtonRemoveDir"));
+
+        horizontalLayout->addWidget(pushButtonRemoveDir);
 
         pushButtonFresh = new QPushButton(horizontalLayoutWidget);
         pushButtonFresh->setObjectName(QString::fromUtf8("pushButtonFresh"));
@@ -118,7 +124,8 @@ public:
         pushButtonAdd->setText(QApplication::translate("MainWindowEncryption", "Add", 0, QApplication::UnicodeUTF8));
         pushButtonCheckOut->setText(QApplication::translate("MainWindowEncryption", "CheckOut", 0, QApplication::UnicodeUTF8));
         pushButtonCheckIn->setText(QApplication::translate("MainWindowEncryption", "CheckIn", 0, QApplication::UnicodeUTF8));
-        pushButtonRemove->setText(QApplication::translate("MainWindowEncryption", "Remove", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("MainWindowEncryption", "Remove Backup", 0, QApplication::UnicodeUTF8));
+        pushButtonRemoveDir->setText(QApplication::translate("MainWindowEncryption", "Remove Dir", 0, QApplication::UnicodeUTF8));
         pushButtonFresh->setText(QApplication::translate("MainWindowEncryption", "Fresh", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

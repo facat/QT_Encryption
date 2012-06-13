@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = QT_Encryption
 TEMPLATE = app
-//LIBS+=-LD:\MyPro\QT_Encryption\src\ -lsqlite3
+#LIBS+=-LD:\MyPro\QT_Encryption\src\ -lsqlite3
 
 SOURCES += main.cpp\
         mainwindowencryption.cpp \

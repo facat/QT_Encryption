@@ -31,7 +31,6 @@ private:
     QString GetDirectoryName(QString path);
 private slots:
     void on_pushButtonAdd_clicked();
-    void on_pushButtonRemove_clicked();
     void on_listWidgetDirList_itemClicked(QListWidgetItem *item);
 
 
@@ -39,6 +38,12 @@ private slots:
     void on_pushButtonCheckOut_clicked();
 
     void on_pushButtonCheckIn_clicked();
+
+    void on_pushButtonRemoveDir_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_tableWidgetDetail_itemClicked(QTableWidgetItem *item);
 
 private:
     QDir backupLocation;
