@@ -1,3 +1,5 @@
+//realName是不包括后缀的MD5码
+
 #include "mainwindowencryption.h"
 #include "src/encryption.h"
 #include "src/filedescription.h"
@@ -283,6 +285,8 @@ void MainWindowEncryption::on_tableWidgetDetail_itemClicked(QTableWidgetItem *it
 
 void MainWindowEncryption::on_pushButtonRemoveBackup_clicked()
 {
+    if(QMessageBox::question(this,"提示","是否删除当前备份文件？",QMessageBox::Yes|QMessageBox::No)==QMessageBox::No) return;
+
     QList<QTableWidgetItem *>  selItem(this->tableWidgetDetail->selectedItems());
     FileDescription fileDes(this->backupLocation.path()+"/db.s3db");
     foreach(QTableWidgetItem *i,selItem)
@@ -304,13 +308,23 @@ void MainWindowEncryption::on_pushButtonRemoveBackup_clicked()
 
 }
 
-void MainWindowEncryption::DeleteBackupFile(QString file)
+void MainWindowEncryption::DeleteBackupFile(QString realName)
 {
     QString Strdir(this->listWidgetDirList->currentItem()->text().replace('\\','/'));
     QString hashDir(this->HashDirName(Strdir));
     QDir dir(this->backupLocation.path()+"/"+hashDir);
-    qDebug()<<"del "+file+".7z";
-    dir.remove(file+".7z");
+    qDebug()<<"del "+realName+".7z";
+    dir.remove(realName+".7z");
 
 
+}
+
+void MainWindowEncryption::on_tableWidgetDetail_itemChanged(QTableWidgetItem *item)
+{
+    if(item->column()!=3) return;
+    QString realName=this->tableWidgetDetail->item(item->row(),0)->text();
+    QString fileName=this->tableWidgetDetail->item(item->row(),1)->text();
+    QString detail=item->text();
+    FileDescription fileDes(this->backupLocation.path()+"/db.s3db");
+    fileDes.SetFileDetail(realName,fileName,detail);
 }

@@ -18,7 +18,7 @@ QString FileDescription::GetFileDetail(QString realName)
     if(SQLITE_ROW !=error)
     {
         sqlite3_finalize(this->pState);
-        return QString("");
+        return QString("NULL");
     }
     //qDebug()<<"sqlite3_column_count"<<sqlite3_column_count(this->pState);
     QByteArray data((char *)sqlite3_column_blob(this->pState,2),sqlite3_column_bytes(this->pState, 2));
@@ -73,7 +73,7 @@ void FileDescription::SetFileDetail(QString realName,QString fileName,QString de
 
 bool FileDescription::IsFileDetailExist(QString realName)
 {
-    if(this->GetFileDetail(realName)=="") return false;
+    if(this->GetFileDetail(realName)=="NULL") return false;
     return true;
 }
 
