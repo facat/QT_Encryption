@@ -76,3 +76,16 @@ bool FileDescription::IsFileDetailExist(QString realName)
     if(this->GetFileDetail(realName)=="") return false;
     return true;
 }
+
+void FileDescription::DeleteFileDetail(QString realName)
+{
+    QString selState;
+    selState=QString("delete  from Description where RealName='%1' ").arg(realName);
+    qDebug()<<selState;
+    int error=sqlite3_prepare(this->dbHandle,selState.toAscii().data(),selState.toAscii().length(),&(this->pState),NULL);
+    qDebug()<<error;
+    error=sqlite3_step(this->pState);
+    qDebug()<<error;
+    sqlite3_finalize(this->pState);
+
+}

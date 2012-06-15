@@ -29,6 +29,7 @@ private:
     QString GetValidZipName(QString dir);
     QString ExtractRealNameFromZipFile(const QString &zipFile);
     QString GetDirectoryName(QString path);
+    void DeleteBackupFile(QString file);
 private slots:
     void on_pushButtonAdd_clicked();
     void on_listWidgetDirList_itemClicked(QListWidgetItem *item);
@@ -41,9 +42,9 @@ private slots:
 
     void on_pushButtonRemoveDir_clicked();
 
-    void on_pushButton_clicked();
-
     void on_tableWidgetDetail_itemClicked(QTableWidgetItem *item);
+
+    void on_pushButtonRemoveBackup_clicked();
 
 private:
     QDir backupLocation;

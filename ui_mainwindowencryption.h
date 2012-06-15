@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindowencryption.ui'
 **
-** Created: Wed Jun 13 16:02:05 2012
+** Created: Wed Jun 13 16:29:40 2012
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,7 +38,7 @@ public:
     QPushButton *pushButtonAdd;
     QPushButton *pushButtonCheckOut;
     QPushButton *pushButtonCheckIn;
-    QPushButton *pushButton;
+    QPushButton *pushButtonRemoveBackup;
     QPushButton *pushButtonRemoveDir;
     QPushButton *pushButtonFresh;
     QMenuBar *menuBar;
@@ -86,10 +86,10 @@ public:
 
         horizontalLayout->addWidget(pushButtonCheckIn);
 
-        pushButton = new QPushButton(horizontalLayoutWidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButtonRemoveBackup = new QPushButton(horizontalLayoutWidget);
+        pushButtonRemoveBackup->setObjectName(QString::fromUtf8("pushButtonRemoveBackup"));
 
-        horizontalLayout->addWidget(pushButton);
+        horizontalLayout->addWidget(pushButtonRemoveBackup);
 
         pushButtonRemoveDir = new QPushButton(horizontalLayoutWidget);
         pushButtonRemoveDir->setObjectName(QString::fromUtf8("pushButtonRemoveDir"));
@@ -124,7 +124,7 @@ public:
         pushButtonAdd->setText(QApplication::translate("MainWindowEncryption", "Add", 0, QApplication::UnicodeUTF8));
         pushButtonCheckOut->setText(QApplication::translate("MainWindowEncryption", "CheckOut", 0, QApplication::UnicodeUTF8));
         pushButtonCheckIn->setText(QApplication::translate("MainWindowEncryption", "CheckIn", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("MainWindowEncryption", "Remove Backup", 0, QApplication::UnicodeUTF8));
+        pushButtonRemoveBackup->setText(QApplication::translate("MainWindowEncryption", "Remove Backup", 0, QApplication::UnicodeUTF8));
         pushButtonRemoveDir->setText(QApplication::translate("MainWindowEncryption", "Remove Dir", 0, QApplication::UnicodeUTF8));
         pushButtonFresh->setText(QApplication::translate("MainWindowEncryption", "Fresh", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

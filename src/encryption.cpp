@@ -149,3 +149,5 @@ void Encryption::decryption(QString file,QString passwd,QString outPath)
 	p->start(z,argList);
 
 }
+
+

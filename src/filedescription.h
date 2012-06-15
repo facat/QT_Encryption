@@ -13,6 +13,7 @@ public:
     QString GetFileName(QString realName);
     void SetFileDetail(QString realName, QString fileName, QString detail);
     bool IsFileDetailExist(QString realName);
+    void DeleteFileDetail(QString realName);
 private:
     sqlite3 *dbHandle;
     sqlite3_stmt *pState;

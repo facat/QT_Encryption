@@ -271,11 +271,7 @@ void MainWindowEncryption::on_pushButtonRemoveDir_clicked()
     this->tableWidgetDetail->setRowCount(0);
 }
 
-void MainWindowEncryption::on_pushButton_clicked()
-{
-    QList<QTableWidgetItem *>  selItem(this->tableWidgetDetail->selectedItems());
-    //QTableWidgetItem.row();
-}
+
 
 
 
@@ -283,4 +279,38 @@ void MainWindowEncryption::on_tableWidgetDetail_itemClicked(QTableWidgetItem *it
 {
     qDebug()<<"on_tableWidgetDetail_itemClicked";
     this->tableWidgetDetail->selectRow(item->row());
+}
+
+void MainWindowEncryption::on_pushButtonRemoveBackup_clicked()
+{
+    QList<QTableWidgetItem *>  selItem(this->tableWidgetDetail->selectedItems());
+    FileDescription fileDes(this->backupLocation.path()+"/db.s3db");
+    foreach(QTableWidgetItem *i,selItem)
+    {
+        qDebug()<<i->column();
+        if(i->column()==1)
+        {
+            qDebug()<<i->text();
+            QString realName(this->tableWidgetDetail->item(i->row(),0)->text());
+            qDebug()<<realName;
+            fileDes.DeleteFileDetail(realName);
+            this->DeleteBackupFile(realName);
+        }
+    }
+
+    this->RefreshBackups(this->listWidgetDirList->currentItem()->text());
+
+
+
+}
+
+void MainWindowEncryption::DeleteBackupFile(QString file)
+{
+    QString Strdir(this->listWidgetDirList->currentItem()->text().replace('\\','/'));
+    QString hashDir(this->HashDirName(Strdir));
+    QDir dir(this->backupLocation.path()+"/"+hashDir);
+    qDebug()<<"del "+file+".7z";
+    dir.remove(file+".7z");
+
+
 }
