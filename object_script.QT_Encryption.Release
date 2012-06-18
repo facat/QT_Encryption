@@ -1,0 +1,13 @@
+INPUT(
+./release/main.o
+./release/mainwindowencryption.o
+./release/encryption.o
+./release/filedescription.o
+./release/sqlite3.o
+./release/detaildialog.o
+./release/passworddialog.o
+./release/moc_mainwindowencryption.o
+./release/moc_encryption.o
+./release/moc_detaildialog.o
+./release/moc_passworddialog.o
+);

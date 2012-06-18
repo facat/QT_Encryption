@@ -4,6 +4,7 @@
 #include "src/encryption.h"
 #include "src/filedescription.h"
 #include "src/detaildialog.h"
+#include "src/passworddialog.h"
 MainWindowEncryption::MainWindowEncryption(QWidget *parent) :
 	QMainWindow(parent),
 	backupLocation("c:/backuplocation/")
@@ -143,8 +144,14 @@ void MainWindowEncryption::on_pushButtonCheckOut_clicked()
 {
 	Encryption *ency=new Encryption(this);
 	if(NULL==this->listWidgetDirList->currentItem()) return;
+    QString pw;
+    PasswordDialog pwDialog(&pw,this);
+    pwDialog.setModal(true);
+    pwDialog.show();
+    pwDialog.exec();
+    qDebug()<<pw;
     QString zipFile=ency->encryption(this->listWidgetDirList->currentItem()->text(),
-	                 "123",
+                     pw,
 	                 this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/')),
 	                 this->GetValidZipName(this->listWidgetDirList->currentItem()->text())
 	                );
@@ -239,9 +246,16 @@ void MainWindowEncryption::on_pushButtonCheckIn_clicked()
     qDebug()<<des;
 	Encryption *ency=new Encryption(this);
 	QString fromFile;
-	fromFile=this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/'))+"/"+zipName;
+    fromFile=this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/'))+"/"+zipName+".7z";
 	qDebug()<<fromFile;
-	ency->decryption(fromFile,"123",des);
+    QString pw;
+    PasswordDialog pwDialog(&pw,this);
+
+    pwDialog.setModal(true);
+    pwDialog.show();
+    pwDialog.exec();
+    qDebug()<<"on_pushButtonCheckIn_clicked"<<pw;
+    ency->decryption(fromFile,pw,des);
 
 
 }
