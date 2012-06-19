@@ -37,6 +37,7 @@ void PasswordDialog::closeEvent(QCloseEvent *e)
 //	}
 	if(!m_OKClicked)
 	{
-		e->ignore();
+        //e->ignore();
+        *this->m_pw="CANCEL";
 	}
 }

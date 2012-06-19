@@ -151,6 +151,7 @@ void MainWindowEncryption::on_pushButtonCheckOut_clicked()
 	pwDialog.show();
 	pwDialog.exec();
 	qDebug()<<pw;
+    if("CANCEL"==pw) return;
 	QString zipFile=ency->encryption(this->listWidgetDirList->currentItem()->text(),
 	                                 pw,
 	                                 this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/')),
@@ -266,7 +267,7 @@ void MainWindowEncryption::on_pushButtonCheckIn_clicked()
 	pwDialog.show();
 	pwDialog.exec();
 	qDebug()<<"on_pushButtonCheckIn_clicked"<<pw;
-
+    if("CANCEL"==pw) return;
 	ency->decryption(fromFile,pw,des);
 
 	//ÏÔÊ¾µÈ´ý´°¿Ú
