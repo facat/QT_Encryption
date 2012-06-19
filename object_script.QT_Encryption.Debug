@@ -6,8 +6,10 @@ INPUT(
 ./debug/sqlite3.o
 ./debug/detaildialog.o
 ./debug/passworddialog.o
+./debug/waitdialog.o
 ./debug/moc_mainwindowencryption.o
 ./debug/moc_encryption.o
 ./debug/moc_detaildialog.o
 ./debug/moc_passworddialog.o
+./debug/moc_waitdialog.o
 );

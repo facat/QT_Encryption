@@ -108,14 +108,27 @@ QString Encryption::GetUpDirectory(QString path)
 
 void Encryption::Output() const
 {
+    QByteArray output;
 	if(NULL!=this->encryprocess)
 	{
-		qDebug()<<this->encryprocess->readAllStandardOutput();
+        output=this->encryprocess->readAllStandardOutput();
+        qDebug()<<output;
 	}
 	if(NULL!=this->decryprocess)
 	{
-		qDebug()<<this->decryprocess->readAllStandardOutput();
+        output=this->decryprocess->readAllStandardOutput();
+        qDebug()<<output;
 	}
+    QString findOutput(output);
+    if(findOutput.contains("Wrong password?"))
+    {
+        qDebug()<<"wrong!!";
+        emit const_cast<Encryption *>(this)->IsDone(0);
+    }
+    else
+    {
+        emit const_cast<Encryption *>(this)->IsDone(1);
+    }
 	const_cast<Encryption *>(this)->deleteLater();
 
 }

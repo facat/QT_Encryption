@@ -18,15 +18,18 @@ SOURCES += main.cpp\
     src/filedescription.cpp \
     src/sqlite3.c \
     src/detaildialog.cpp \
-    src/passworddialog.cpp
+    src/passworddialog.cpp \
+    src/waitdialog.cpp
 
 HEADERS  += mainwindowencryption.h \
     src/encryption.h \
     src/filedescription.h \
     src/detaildialog.h \
-    src/passworddialog.h
+    src/passworddialog.h \
+    src/waitdialog.h
 
 
 FORMS    += mainwindowencryption.ui \
     src/detaildialog.ui \
-    src/passworddialog.ui
+    src/passworddialog.ui \
+    src/waitdialog.ui

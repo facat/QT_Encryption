@@ -20,6 +20,8 @@ private:
 
 private slots:
 	void Output() const;
+signals:
+    void IsDone(int );
 
 };
 

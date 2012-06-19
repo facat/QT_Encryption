@@ -6,8 +6,10 @@ INPUT(
 ./release/sqlite3.o
 ./release/detaildialog.o
 ./release/passworddialog.o
+./release/waitdialog.o
 ./release/moc_mainwindowencryption.o
 ./release/moc_encryption.o
 ./release/moc_detaildialog.o
 ./release/moc_passworddialog.o
+./release/moc_waitdialog.o
 );

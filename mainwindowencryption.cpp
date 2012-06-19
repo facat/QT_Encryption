@@ -5,6 +5,7 @@
 #include "src/filedescription.h"
 #include "src/detaildialog.h"
 #include "src/passworddialog.h"
+#include "src/waitdialog.h"
 MainWindowEncryption::MainWindowEncryption(QWidget *parent) :
 	QMainWindow(parent),
 	backupLocation("c:/backuplocation/")
@@ -155,6 +156,12 @@ void MainWindowEncryption::on_pushButtonCheckOut_clicked()
 	                 this->backupLocation.path()+"/"+this->HashDirName(this->listWidgetDirList->currentItem()->text().replace('\\','/')),
 	                 this->GetValidZipName(this->listWidgetDirList->currentItem()->text())
 	                );
+    //显示等待窗口
+    WaitDialog waitDialog(this);
+    connect(ency,SIGNAL(IsDone(int)),&waitDialog,SLOT(done(int)));
+    waitDialog.setModal(true);
+    waitDialog.show();
+    waitDialog.exec();
     FileDescription fileDiscrip(this->backupLocation.path()+"/db.s3db");
     QString realName(this->ExtractRealNameFromZipFile(zipFile));
     qDebug()<<"realName "<<realName;
@@ -256,6 +263,12 @@ void MainWindowEncryption::on_pushButtonCheckIn_clicked()
     pwDialog.exec();
     qDebug()<<"on_pushButtonCheckIn_clicked"<<pw;
     ency->decryption(fromFile,pw,des);
+    //显示等待窗口
+    WaitDialog waitDialog(this);
+    connect(ency,SIGNAL(IsDone(int)),&waitDialog,SLOT(done(int)));
+    waitDialog.setModal(true);
+    waitDialog.show();
+    waitDialog.exec();
 
 
 }
