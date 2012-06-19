@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindowencryption.ui'
 **
-** Created: Wed Jun 13 16:29:40 2012
+** Created: Tue Jun 19 15:38:08 2012
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -36,11 +36,13 @@ public:
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *pushButtonAdd;
+    QPushButton *pushButtonOpenDir;
     QPushButton *pushButtonCheckOut;
     QPushButton *pushButtonCheckIn;
     QPushButton *pushButtonRemoveBackup;
     QPushButton *pushButtonRemoveDir;
     QPushButton *pushButtonFresh;
+    QPushButton *pushButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -76,6 +78,11 @@ public:
 
         horizontalLayout->addWidget(pushButtonAdd);
 
+        pushButtonOpenDir = new QPushButton(horizontalLayoutWidget);
+        pushButtonOpenDir->setObjectName(QString::fromUtf8("pushButtonOpenDir"));
+
+        horizontalLayout->addWidget(pushButtonOpenDir);
+
         pushButtonCheckOut = new QPushButton(horizontalLayoutWidget);
         pushButtonCheckOut->setObjectName(QString::fromUtf8("pushButtonCheckOut"));
 
@@ -101,6 +108,9 @@ public:
 
         horizontalLayout->addWidget(pushButtonFresh);
 
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(30, 510, 75, 23));
         MainWindowEncryption->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindowEncryption);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -122,11 +132,13 @@ public:
     {
         MainWindowEncryption->setWindowTitle(QApplication::translate("MainWindowEncryption", "MainWindowEncryption", 0, QApplication::UnicodeUTF8));
         pushButtonAdd->setText(QApplication::translate("MainWindowEncryption", "Add", 0, QApplication::UnicodeUTF8));
+        pushButtonOpenDir->setText(QApplication::translate("MainWindowEncryption", "OpenDir", 0, QApplication::UnicodeUTF8));
         pushButtonCheckOut->setText(QApplication::translate("MainWindowEncryption", "CheckOut", 0, QApplication::UnicodeUTF8));
         pushButtonCheckIn->setText(QApplication::translate("MainWindowEncryption", "CheckIn", 0, QApplication::UnicodeUTF8));
         pushButtonRemoveBackup->setText(QApplication::translate("MainWindowEncryption", "Remove Backup", 0, QApplication::UnicodeUTF8));
         pushButtonRemoveDir->setText(QApplication::translate("MainWindowEncryption", "Remove Dir", 0, QApplication::UnicodeUTF8));
         pushButtonFresh->setText(QApplication::translate("MainWindowEncryption", "Fresh", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("MainWindowEncryption", "debug", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

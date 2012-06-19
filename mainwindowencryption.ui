@@ -65,6 +65,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButtonOpenDir">
+       <property name="text">
+        <string>OpenDir</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButtonCheckOut">
        <property name="text">
         <string>CheckOut</string>
@@ -100,6 +107,19 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>510</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>debug</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

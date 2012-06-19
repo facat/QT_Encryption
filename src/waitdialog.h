@@ -9,10 +9,14 @@ class WaitDialog : public QDialog, private Ui::WaitDialog
 
 public:
 	explicit WaitDialog(QWidget *parent = 0);
-	virtual void	done ( int r );
+
+signals:
+    void Rollback();
+
 
 private slots:
-    void on_pushButtonOK_clicked();
+	void on_pushButtonOK_clicked();
+	virtual void	done ( int r );
 };
 
 #endif // WAITDIALOG_H

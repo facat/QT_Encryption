@@ -49,7 +49,6 @@ QString Encryption::encryption(QString path, QString passwd, QString outPath, QS
 		if(""==zipName)
 		{
 			out7zFile=outPath+"/"+Encryption::GetDirectoryName(path)+".7z";
-
 		}
 		else
 		{
@@ -63,6 +62,7 @@ QString Encryption::encryption(QString path, QString passwd, QString outPath, QS
 		QFile::remove(removedFile);
 	}
 	path.replace('\\',"/");
+    qDebug()<<"path"<<path;
 	if(path.at(path.length()-1)=='/')
 	{
 		argList.append(path);

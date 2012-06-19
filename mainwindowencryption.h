@@ -10,6 +10,8 @@
 #include <QList>
 #include <QTableWidgetItem>
 #include <QTextStream>
+#include <QDesktopServices>
+#include <QTemporaryFile>
 class MainWindowEncryption : public QMainWindow, private Ui::MainWindowEncryption
 {
     Q_OBJECT
@@ -21,7 +23,7 @@ private:
     void RemoveDir(QDir dir);
     QString HashDirName(QString data);
     bool IsDirExist(QString dir);
-    void MakeBackup(QString dir);
+    //void MakeBackup(QString dir);
     void ReadAllBackups();
     void WriteAllBackups();
     void closeEvent(QCloseEvent *);
@@ -30,6 +32,10 @@ private:
     QString ExtractRealNameFromZipFile(const QString &zipFile);
     QString GetDirectoryName(QString path);
     void DeleteBackupFile(QString realName);
+    void MakeBackupForRollBack(QString dir);
+    void DeleteTempFile();
+public slots:
+    void Rollback();
 private slots:
     void on_pushButtonAdd_clicked();
     void on_listWidgetDirList_itemClicked(QListWidgetItem *item);
@@ -48,8 +54,13 @@ private slots:
 
     void on_tableWidgetDetail_itemChanged(QTableWidgetItem *item);
 
+    void on_pushButtonOpenDir_clicked();
+
+    void on_pushButton_clicked();
+
 private:
     QDir backupLocation;
+    QString m_tempFile;
 };
 
 #endif // MAINWINDOWENCRYPTION_H

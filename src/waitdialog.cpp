@@ -11,6 +11,7 @@ void	WaitDialog::done ( int r )
     if(0==r)
     {
         this->plainTextEditError->setPlainText("½âÑ¹³ö´í£¡");
+        emit this->Rollback();
     }
     else
     {
